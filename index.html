@@ -36,9 +36,14 @@
         <script src="data/circuitos_subdivididos_corregido_1.js"></script>
         <script src="data/PM_2.js"></script>
         <script>
+        var highlightLayer;
+        function highlightFeature(e) {
+            highlightLayer = e.target;
+            highlightLayer.openPopup();
+        }
         var map = L.map('map', {
             zoomControl:false, maxZoom:28, minZoom:1
-        }).fitBounds([[-38.03646198850663,-57.579274613921534],[-38.019452555450286,-57.54785441119245]]);
+        }).fitBounds([[-38.04760228124997,-57.7042042487027],[-37.911526816799785,-57.45284262687111]]);
         var hash = new L.Hash(map);
         map.attributionControl.setPrefix('<a href="https://github.com/qgis2web/qgis2web" target="_blank">qgis2web</a> &middot; <a href="https://leafletjs.com" title="A JS library for interactive maps">Leaflet</a> &middot; <a href="https://qgis.org">QGIS</a>');
         var autolinker = new Autolinker({truncate: {length: 30, location: 'smart'}});
@@ -134,6 +139,18 @@
         layer_ESRIStandard_0;
         map.addLayer(layer_ESRIStandard_0);
         function pop_circuitos_subdivididos_corregido_1(feature, layer) {
+            layer.on({
+                mouseout: function(e) {
+                    if (typeof layer.closePopup == 'function') {
+                        layer.closePopup();
+                    } else {
+                        layer.eachLayer(function(feature){
+                            feature.closePopup()
+                        });
+                    }
+                },
+                mouseover: highlightFeature,
+            });
             var popupContent = '<table>\
                     <tr>\
                         <td colspan="2">' + (feature.properties['id'] !== null ? autolinker.link(String(feature.properties['id']).replace(/'/g, '\'').toLocaleString()) : '') + '</td>\
@@ -244,12 +261,25 @@
         bounds_group.addLayer(layer_circuitos_subdivididos_corregido_1);
         map.addLayer(layer_circuitos_subdivididos_corregido_1);
         function pop_PM_2(feature, layer) {
+            layer.on({
+                mouseout: function(e) {
+                    if (typeof layer.closePopup == 'function') {
+                        layer.closePopup();
+                    } else {
+                        layer.eachLayer(function(feature){
+                            feature.closePopup()
+                        });
+                    }
+                },
+                mouseover: highlightFeature,
+            });
             var popupContent = '<table>\
                     <tr>\
                         <td colspan="2">' + (feature.properties['id'] !== null ? autolinker.link(String(feature.properties['id']).replace(/'/g, '\'').toLocaleString()) : '') + '</td>\
                     </tr>\
                     <tr>\
-                        <td colspan="2">' + (feature.properties['PM'] !== null ? autolinker.link(String(feature.properties['PM']).replace(/'/g, '\'').toLocaleString()) : '') + '</td>\
+                        <th scope="row">PM</th>\
+                        <td class="visible-with-data" id="PM">' + (feature.properties['PM'] !== null ? autolinker.link(String(feature.properties['PM']).replace(/'/g, '\'').toLocaleString()) : '') + '</td>\
                     </tr>\
                 </table>';
             var content = removeEmptyRowsFromPopupContent(popupContent, feature);
