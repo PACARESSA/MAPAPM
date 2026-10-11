@@ -11,14 +11,14 @@
         <link rel="stylesheet" href="css/qgis2web.css">
         <link rel="stylesheet" href="css/fontawesome-all.min.css">
         <link rel="stylesheet" href="css/leaflet.photon.css">
-       <style>
-<style>
+    <style>
 html, body {
     width: 100% !important;
     height: 100% !important;
     margin: 0 !important;
     padding: 0 !important;
     overflow: hidden !important;
+    position: fixed !important;
 }
 #map {
     width: 100% !important;
@@ -29,11 +29,11 @@ html, body {
     bottom: 0 !important;
     right: 0 !important;
 }
-</style>28 | </style>>
-        <title></title>
-    </head>
-    <body>
-        <div id="map">
+.leaflet-popup-content-wrapper {
+    max-height: 250px;
+    overflow-y: auto !important;
+}
+</style>      <div id="map">
         </div>
         <script src="js/qgis2web_expressions.js"></script>
         <script src="js/leaflet.js"></script>
